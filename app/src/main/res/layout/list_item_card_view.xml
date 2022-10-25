@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:src="@+id/image_view"/>
+        android:id="@+id/image_view"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
@@ -19,14 +19,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="First Name"
             android:textSize="24sp"
-            android:id="@+id/title_text" />
+            android:id="@+id/first_name" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="Last Name"
             android:textSize="20dp"
-            android:id="@+id/description_text"/>
+            android:id="@+id/last_name"/>
     </LinearLayout>
 </LinearLayout>

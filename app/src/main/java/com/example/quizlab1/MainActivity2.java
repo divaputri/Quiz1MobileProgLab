@@ -6,30 +6,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.quizlab1.Models.DataModel;
+import com.bumptech.glide.Glide;
 import com.example.quizlab1.Models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity{
 
     ArrayList<User> users;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +53,6 @@ public class MainActivity2 extends AppCompatActivity{
             try{
                 JSONObject object = new JSONObject(response);
                 JSONArray array = object.getJSONArray("data");
-
-                users.add(new User("first_name", "last_name", "Avatar"));
 
                 for (int i = 0; i < 5; i++) {
                     JSONObject user = array.getJSONObject(i);
@@ -101,9 +102,13 @@ class DataModelAdapter extends RecyclerView.Adapter<DataModelViewHolder> {
     public void onBindViewHolder(@NonNull DataModelViewHolder holder, int position) {
         User model = dataModels.get(position);
 
-        holder.titleText.setText(model.getTitle());
-        holder.descriptionText.setText(model.getDescription());
+        holder.firstName.setText(model.getFirstname());
+        holder.lastName.setText(model.getLastname());
 
+        Glide.with(holder.parent.getContext())
+                .load(dataModels.get(position).getAvatar())
+                .circleCrop()
+                .into(holder.avatarDisplay);
 
     }
 
@@ -115,15 +120,15 @@ class DataModelAdapter extends RecyclerView.Adapter<DataModelViewHolder> {
 
 class DataModelViewHolder extends RecyclerView.ViewHolder {
     View parent;
-    TextView titleText;
-    TextView descriptionText;
+    TextView firstName;
+    TextView lastName;
     ImageView avatarDisplay;
 
     public DataModelViewHolder(@NonNull View itemView) {
         super(itemView);
         parent = itemView;
-        titleText = itemView.findViewById(R.id.title_text);
-        descriptionText = itemView.findViewById(R.id.description_text);
+        firstName = itemView.findViewById(R.id.first_name);
+        lastName = itemView.findViewById(R.id.last_name);
         avatarDisplay = itemView.findViewById(R.id.image_view);
     }
 }

@@ -34,11 +34,9 @@ public class MainActivity extends AppCompatActivity {
                 usernameString = inputUsername.getText().toString();
                 passwordString = inputPassword.getText().toString();
 
-                if(usernameString.equalsIgnoreCase("") || passwordString.equalsIgnoreCase("")){
+                if(usernameString.equalsIgnoreCase("") && passwordString.equalsIgnoreCase("")){
                     Toast.makeText(getApplicationContext(), "Please enter username or password", Toast.LENGTH_SHORT).show();
-                }
-
-                if(!usernameString.equalsIgnoreCase("Admin") || !passwordString.equalsIgnoreCase("Password")){
+                }else if(!usernameString.equalsIgnoreCase("Admin") && !passwordString.equalsIgnoreCase("Password")){
                     Toast.makeText(getApplicationContext(), "Wrong Username or Password", Toast.LENGTH_SHORT).show();
                 } else{
                     Intent intent = new Intent(view.getContext(), MainActivity2.class);
@@ -51,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         clickReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             }
         });
     }
