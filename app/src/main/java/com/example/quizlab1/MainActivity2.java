@@ -56,7 +56,7 @@ public class MainActivity2 extends AppCompatActivity{
 
                 for (int i = 0; i < 5; i++) {
                     JSONObject user = array.getJSONObject(i);
-                    users.add(new User(user.getString("first_name"), user.getString("last_name"), user.getString("avatar")));
+                    users.add(new User(user.getInt("id"), user.getString("first_name"), user.getString("last_name"), user.getString("avatar")));
 
                     prepareListView();
                 }
@@ -102,6 +102,17 @@ class DataModelAdapter extends RecyclerView.Adapter<DataModelViewHolder> {
     public void onBindViewHolder(@NonNull DataModelViewHolder holder, int position) {
         User model = dataModels.get(position);
 
+        holder.id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Details.class);
+                intent.putExtra("Id", model.getId());
+                intent.putExtra("firstName", model.getFirstname());
+                intent.putExtra("lastName", model.getLastname());
+                intent.putExtra("avatar", model.getAvatar());
+                view.getContext().startActivity(intent);
+            }
+        });
         holder.firstName.setText(model.getFirstname());
         holder.lastName.setText(model.getLastname());
 
@@ -109,7 +120,6 @@ class DataModelAdapter extends RecyclerView.Adapter<DataModelViewHolder> {
                 .load(dataModels.get(position).getAvatar())
                 .circleCrop()
                 .into(holder.avatarDisplay);
-
     }
 
     @Override
@@ -123,10 +133,12 @@ class DataModelViewHolder extends RecyclerView.ViewHolder {
     TextView firstName;
     TextView lastName;
     ImageView avatarDisplay;
+    LinearLayout id;
 
     public DataModelViewHolder(@NonNull View itemView) {
         super(itemView);
         parent = itemView;
+        id = itemView.findViewById(R.id.list_item_card_view);
         firstName = itemView.findViewById(R.id.first_name);
         lastName = itemView.findViewById(R.id.last_name);
         avatarDisplay = itemView.findViewById(R.id.image_view);
